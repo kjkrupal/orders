@@ -23,6 +23,10 @@ class Order(models.Model):
 
     status = models.CharField(max_length=32, choices=STATUS_TYPES, db_index=True)
 
+    created_ts = models.DateTimeField(blank=True, auto_now_add=True)
+
+    last_status_update_ts = models.DateTimeField(blank=True, auto_now=True)
+
     def __str__(self):
         return f"{self.id}##{self.product.product_id}"
 
