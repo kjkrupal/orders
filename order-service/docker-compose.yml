@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  database:
+    container_name: ecommerce-orders-database
+    image: postgres:12.1
+    ports:
+      - 5433:5432
+    volumes:
+      - ecommerce-orders-database:/var/lib/postgresql/data
+
+  server:
+    build:
+      context: ./server
+    container_name: ecommerce-orders-server
+    command: ["bash", "start.sh"]
+    depends_on:
+      - database
+    environment:
+      - PGDATABASE=ecommerce
+      - PGUSER=ecommerce
+      - PGPASSWORD=ecommerce
+      - PGHOST=ecommerce-orders-database
+
+    ports:
+      - 8001:8000
+    volumes:
+      - ./server:/usr/src/app
+      - static:/usr/src/app/static
+
+  reverse-proxy:
+    build:
+      context: ./reverse-proxy
+    container_name: ecommerce-reverse-proxy
+    depends_on:
+      - server
+    ports:
+      - 8080:80
+    restart: always
+    volumes:
+      - static:/usr/src/app/static
+
+volumes:
+  ecommerce-orders-database:
+  static:
