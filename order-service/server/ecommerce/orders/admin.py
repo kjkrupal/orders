@@ -8,18 +8,27 @@ class OrderAdmin(admin.ModelAdmin):
     fields = (
         "id",
         "product",
+        "tracking_id",
         "status",
+        "order_details",
+        "created_ts",
+        "last_status_update_ts",
     )
     list_display = (
         "id",
         "product",
+        "tracking_id",
         "status",
     )
     ordering = ("id",)
     readonly_fields = (
         "id",
         "product",
+        "tracking_id",
         "status",
+        "order_details",
+        "created_ts",
+        "last_status_update_ts",
     )
 
 
@@ -27,7 +36,6 @@ class OrderAdmin(admin.ModelAdmin):
 class OrderDetailsAdmin(admin.ModelAdmin):
     fields = (
         "id",
-        "order",
         "first_name",
         "last_name",
         "street_1",
@@ -38,10 +46,18 @@ class OrderDetailsAdmin(admin.ModelAdmin):
     )
     list_display = (
         "id",
-        "order",
         "first_name",
         "last_name",
         "city",
     )
     ordering = ("id",)
-    readonly_fields = ("id",)
+    readonly_fields = (
+        "id",
+        "first_name",
+        "last_name",
+        "street_1",
+        "street_2",
+        "city",
+        "state",
+        "zip_code",
+    )
