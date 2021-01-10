@@ -8,6 +8,8 @@ services:
       - 5433:5432
     volumes:
       - ecommerce-orders-database:/var/lib/postgresql/data
+    networks:
+      - order-service-network
 
   server:
     build:
@@ -21,7 +23,6 @@ services:
       - PGUSER=ecommerce
       - PGPASSWORD=ecommerce
       - PGHOST=ecommerce-orders-database
-
     ports:
       - 8001:8000
     volumes:
@@ -39,7 +40,14 @@ services:
     restart: always
     volumes:
       - static:/usr/src/app/static
+    networks:
+      - order-service-network
 
 volumes:
   ecommerce-orders-database:
   static:
+
+networks:
+  order-service-network:
+    external:
+      name: rabbitmq-network
