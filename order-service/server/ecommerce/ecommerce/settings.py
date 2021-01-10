@@ -37,7 +37,10 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "django_filters",
+]
 
 LOCAL_APPS = [
     "orders.apps.OrdersConfig",
@@ -92,6 +95,10 @@ DATABASES = {
     }
 }
 
+# Django rest framework
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",)
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

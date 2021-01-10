@@ -16,7 +16,4 @@ class ProductInventoryAdmin(admin.ModelAdmin):
         "count",
     )
     ordering = ("id",)
-    readonly_fields = (
-        "id",
-        "product_id",
-    )
+    readonly_fields = ("id",)
