@@ -40,6 +40,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "product",
             "tracking_id",
             "order_details",
+            "status",
         )
         read_only_fields = (
             "id",
@@ -47,6 +48,5 @@ class OrderSerializer(serializers.ModelSerializer):
             "status",
         )
         extra_kwargs = {
-            "order_details": {"write_only": True},
             "product": {"write_only": True},
         }

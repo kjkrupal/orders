@@ -20,13 +20,11 @@ class OrderDetails(models.Model):
 
 class Order(models.Model):
     CREATED = "CREATED"
-    REJECTED = "REJECTED"
     ACCEPTED = "ACCEPTED"
     PROCESSING = "PROCESSING"
     DELIVERED = "DELIVERED"
     STATUS_TYPES = (
         (CREATED, CREATED),
-        (REJECTED, REJECTED),
         (ACCEPTED, ACCEPTED),
         (PROCESSING, PROCESSING),
         (DELIVERED, DELIVERED),
