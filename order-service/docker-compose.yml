@@ -8,11 +8,14 @@ services:
       - 5433:5432
     volumes:
       - ecommerce-orders-database:/var/lib/postgresql/data
+    networks:
+      - orders-network
 
   server:
     build:
       context: ./server
     container_name: ecommerce-orders-server
+    image: ecommerce-orders-server
     command: ["bash", "start.sh"]
     depends_on:
       - database
@@ -21,12 +24,22 @@ services:
       - PGUSER=ecommerce
       - PGPASSWORD=ecommerce
       - PGHOST=ecommerce-orders-database
-
     ports:
       - 8001:8000
     volumes:
       - ./server:/usr/src/app
       - static:/usr/src/app/static
+    networks:
+      - orders-network
+
+  worker:
+    image: ecommerce-orders-server
+    command: celery -A ecommerce.celery worker -l info
+    depends_on:
+      - server
+      - database
+    networks:
+      - orders-network
 
   reverse-proxy:
     build:
@@ -39,7 +52,14 @@ services:
     restart: always
     volumes:
       - static:/usr/src/app/static
+    networks:
+      - orders-network
 
 volumes:
   ecommerce-orders-database:
   static:
+
+networks:
+  orders-network:
+    external:
+      name: rabbitmq-network
