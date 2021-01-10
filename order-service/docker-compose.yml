@@ -28,6 +28,8 @@ services:
     volumes:
       - ./server:/usr/src/app
       - static:/usr/src/app/static
+    networks:
+      - order-service-network
 
   reverse-proxy:
     build:
