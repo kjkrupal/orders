@@ -9,7 +9,7 @@ services:
     volumes:
       - ecommerce-orders-database:/var/lib/postgresql/data
     networks:
-      - orders-network
+      - order-service-network
 
   server:
     build:
@@ -30,16 +30,7 @@ services:
       - ./server:/usr/src/app
       - static:/usr/src/app/static
     networks:
-      - orders-network
-
-  worker:
-    image: ecommerce-orders-server
-    command: celery -A ecommerce.celery worker -l info
-    depends_on:
-      - server
-      - database
-    networks:
-      - orders-network
+      - order-service-network
 
   reverse-proxy:
     build:
@@ -53,13 +44,13 @@ services:
     volumes:
       - static:/usr/src/app/static
     networks:
-      - orders-network
+      - order-service-network
 
 volumes:
   ecommerce-orders-database:
   static:
 
 networks:
-  orders-network:
+  order-service-network:
     external:
       name: rabbitmq-network
