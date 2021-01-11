@@ -32,6 +32,17 @@ services:
     networks:
       - order-service-network
 
+  worker:
+    image: ecommerce-orders-server
+    restart: on-failure
+    command: >
+      sh -c "cd ecommerce && celery -A ecommerce.celery worker -l info"
+    depends_on:
+      - server
+      - database
+    networks:
+      - order-service-network
+
   reverse-proxy:
     build:
       context: ./reverse-proxy
