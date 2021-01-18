@@ -2,8 +2,11 @@ from __future__ import absolute_import, unicode_literals
 
 # Standard Library
 import os
+import abc
 
 import kombu
+
+from . import constants
 from celery import Celery, bootsteps
 
 # set the default Django settings module for the 'celery' program.
@@ -23,40 +26,47 @@ app.autodiscover_tasks()
 # setting publisher
 with app.pool.acquire(block=True) as conn:
     exchange = kombu.Exchange(
-        name="myexchange",
-        type="direct",
-        durable=True,
+        name=constants.EXCHANGE_NAME,
         channel=conn,
     )
-    exchange.declare()
 
-    queue = kombu.Queue(
-        name="myqueue",
+    order_create_catalog_queue = kombu.Queue(
+        name=constants.ORDER_CREATE_CATALOG_QUEUE,
         exchange=exchange,
-        routing_key="mykey",
         channel=conn,
-        message_ttl=600,
-        queue_arguments={"x-queue-type": "classic"},
-        durable=True,
     )
-    queue.declare()
+    order_create_analytics_queue = kombu.Queue(
+        name=constants.ORDER_CREATE_ANALYTICS_QUEUE,
+        exchange=exchange,
+        channel=conn,
+    )
+    order_create_processor_queue = kombu.Queue(
+        name=constants.ORDER_CREATE_PROCESSOR_QUEUE,
+        exchange=exchange,
+        channel=conn,
+    )
+    product_add_queue = kombu.Queue(
+        name=constants.PRODUCT_ADD_QUEUE,
+        exchange=exchange,
+        channel=conn,
+    )
 
 
 # setting consumer
-class MyConsumerStep(bootsteps.ConsumerStep):
+class ProductAddConsumer(bootsteps.ConsumerStep):
     def get_consumers(self, channel):
         return [
             kombu.Consumer(
                 channel,
-                queues=[queue],
-                callbacks=[self.handle_message],
+                queues=[product_add_queue],
+                callbacks=[self.process_message],
                 accept=["json"],
             )
         ]
 
-    def handle_message(self, body, message):
-        print("Received message: {0!r}".format(body))
-        message.ack()
+    @abc.abstractmethod
+    def process_message(self, body, message):
+        pass
 
 
-app.steps["consumer"].add(MyConsumerStep)
+app.steps["consumer"].add(ProductAddConsumer)

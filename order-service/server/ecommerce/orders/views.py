@@ -1,7 +1,7 @@
 from django.db import transaction
 from rest_framework import viewsets, mixins, status, response, exceptions
 
-from . import serializers, models, tasks
+from . import serializers, models, publishers
 
 
 class OrderViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -33,7 +33,7 @@ class OrderViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
         response_serializer = self.get_serializer(order)
 
-        tasks.publish_message("Naaco bhosdiwaalo")
+        publishers.order_created(order)
 
         headers = self.get_success_headers(serializer.data)
         return response.Response(
