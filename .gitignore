@@ -131,3 +131,5 @@ dmypy.json
 .docker/
 
 /event-bus/event-bus
+
+.vscode/
