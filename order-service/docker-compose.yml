@@ -15,6 +15,7 @@ services:
     build:
       context: ./server
     container_name: ecommerce-orders-server
+    image: ecommerce-orders-server
     command: ["bash", "start.sh"]
     depends_on:
       - database
@@ -28,6 +29,17 @@ services:
     volumes:
       - ./server:/usr/src/app
       - static:/usr/src/app/static
+    networks:
+      - order-service-network
+
+  worker:
+    image: ecommerce-orders-server
+    restart: on-failure
+    command: >
+      sh -c "cd ecommerce && celery -A ecommerce.celery worker -l info"
+    depends_on:
+      - server
+      - database
     networks:
       - order-service-network
 

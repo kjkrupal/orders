@@ -40,6 +40,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "django_filters",
+    "django_celery_results",
 ]
 
 LOCAL_APPS = [
@@ -142,3 +143,7 @@ ALLOWED_HOSTS = ["*"]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "../static")
 STATIC_URL = "/staticfiles/"
+
+# Celery properties
+CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672//"
+CELERY_RESULT_BACKEND = "django-db"
