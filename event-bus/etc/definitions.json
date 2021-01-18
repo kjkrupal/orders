@@ -1,0 +1,124 @@
+{
+	"rabbit_version": "3.8.9",
+	"rabbitmq_version": "3.8.9",
+	"product_name": "RabbitMQ",
+	"product_version": "3.8.9",
+	"users": [{
+			"name": "admin",
+			"password_hash": "uj/F+goCCJt/h/s9q1DGmn/x/zoMAi9LXMfAwlubKVqlVvLd",
+			"hashing_algorithm": "rabbit_password_hashing_sha256",
+			"tags": "administrator"
+		},
+		{
+			"name": "guest",
+			"password_hash": "1uHjTJk52K85m82iNR8BdUQkzf6wTWjTPdDrsgS+N3CGfWrl",
+			"hashing_algorithm": "rabbit_password_hashing_sha256",
+			"tags": "administrator"
+		}
+	],
+	"vhosts": [{
+		"name": "/"
+	}],
+	"permissions": [{
+			"user": "admin",
+			"vhost": "/",
+			"configure": ".*",
+			"write": ".*",
+			"read": ".*"
+		},
+		{
+			"user": "guest",
+			"vhost": "/",
+			"configure": ".*",
+			"write": ".*",
+			"read": ".*"
+		}
+	],
+	"topic_permissions": [{
+		"user": "admin",
+		"vhost": "/",
+		"exchange": "",
+		"write": ".*",
+		"read": ".*"
+	}],
+	"parameters": [],
+	"global_parameters": [{
+		"name": "cluster_name",
+		"value": "rabbit@7e907e0c1bb7"
+	}, {
+		"name": "internal_cluster_id",
+		"value": "rabbitmq-cluster-id-Bwfdeq5oN_hcrHtLIyDJAQ"
+	}],
+	"policies": [],
+	"queues": [{
+		"name": "order-create-catalog-queue",
+		"vhost": "/",
+		"durable": true,
+		"auto_delete": false,
+		"arguments": {
+			"x-queue-type": "classic"
+		}
+	}, {
+		"name": "order-create-analytics-queue",
+		"vhost": "/",
+		"durable": true,
+		"auto_delete": false,
+		"arguments": {
+			"x-queue-type": "classic"
+		}
+	}, {
+		"name": "order-create-processor-queue",
+		"vhost": "/",
+		"durable": true,
+		"auto_delete": false,
+		"arguments": {
+			"x-queue-type": "classic"
+		}
+	}, {
+		"name": "product-add-queue",
+		"vhost": "/",
+		"durable": true,
+		"auto_delete": false,
+		"arguments": {
+			"x-queue-type": "classic"
+		}
+	}],
+	"exchanges": [{
+		"name": "ECOMMERCE",
+		"vhost": "/",
+		"type": "fanout",
+		"durable": true,
+		"auto_delete": false,
+		"internal": false,
+		"arguments": {}
+	}],
+	"bindings": [{
+		"source": "ECOMMERCE",
+		"vhost": "/",
+		"destination": "order-create-analytics-queue",
+		"destination_type": "queue",
+		"routing_key": "",
+		"arguments": {}
+	}, {
+		"source": "ECOMMERCE",
+		"vhost": "/",
+		"destination": "order-create-catalog-queue",
+		"destination_type": "queue",
+		"routing_key": "",
+		"arguments": {}
+	}, {
+		"source": "ECOMMERCE",
+		"vhost": "/",
+		"destination": "order-create-processor-queue",
+		"destination_type": "queue",
+		"routing_key": "",
+		"arguments": {}
+	}, {
+		"source": "ECOMMERCE",
+		"vhost": "/",
+		"destination": "product-add-queue",
+		"destination_type": "queue",
+		"routing_key": "",
+		"arguments": {}
+	}]
+}
