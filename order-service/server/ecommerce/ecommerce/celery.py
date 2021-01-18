@@ -27,6 +27,7 @@ app.autodiscover_tasks()
 with app.pool.acquire(block=True) as conn:
     exchange = kombu.Exchange(
         name=constants.EXCHANGE_NAME,
+        type=constants.EXCHANGE_TYPE,
         channel=conn,
     )
 

@@ -9,7 +9,9 @@ services:
       - 15672:15672
     networks:
       - rabbitmq-network
-
+    hostname: my-rabbit
+    volumes:
+      - ./etc/definitions.json:/etc/rabbitmq/definitions.json
 networks:
   rabbitmq-network:
     name: rabbitmq-network
