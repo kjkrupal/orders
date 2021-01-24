@@ -1,6 +1,6 @@
 Sample Request:
 
-`
+```  
 curl --location --request POST 'http://localhost:8080/api/v1/orders/create/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -16,11 +16,11 @@ curl --location --request POST 'http://localhost:8080/api/v1/orders/create/' \
     "product": 2
 }'  
 
-`
+```
 
 For Postman:
 
-`
+```
 {
     "order_details": {
         "first_name": "Krupal",
@@ -34,4 +34,4 @@ For Postman:
     "product": 2
 }
 
-`
+```
