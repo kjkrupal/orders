@@ -1,0 +1,57 @@
+version: '3.7'
+
+services:
+  database:
+    container_name: catalog-database
+    image: postgres:12.1
+    ports:
+      - 5434:5432
+    volumes:
+      - catalog-database:/var/lib/postgresql/data
+    networks:
+      - catalog-service-network
+
+  server:
+    build:
+      context: ./server
+    container_name: catalog-server
+    command: [ "bash", "start.sh" ]
+    depends_on: 
+      - database
+    environment: 
+      - PGDATABASE=catalog
+      - PGUSER=catalog
+      - PGPASSWORD=catalog
+      - PGHOST=catalog-database
+    ports:
+      - 8002:8000
+    volumes:
+      - ./server:/usr/src/app
+      - static:/usr/src/app/static
+    networks:
+      - catalog-service-network
+
+
+  reverse-proxy:
+    build:
+      context: ./reverse-proxy
+    container_name: catalog-reverse-proxy
+    depends_on:
+      - server
+    ports:
+      - 8081:80
+    restart: always
+    volumes:
+      - static:/usr/src/app/static 
+    networks:
+      - catalog-service-network     
+
+volumes:
+  catalog-database:
+  static:
+
+networks:
+  catalog-service-network:
+    external:
+      name: rabbitmq-network
+    
