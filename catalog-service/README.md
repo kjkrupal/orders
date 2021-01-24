@@ -6,17 +6,17 @@ Ports:
 | Reverse Proxy   | localhost:8081|  
 
 Access Admin Panel:  
-`  
+```  
 http://localhost:8081/admin/    
 
 Username : admin   
 Password : admin  
-`  
+```  
 
 API Request:  
-`
+```
 GET
 http://localhost:8002/api/v1/catalog/products/?query=merlot&country=US&points=90
 
-`
+```
 
