@@ -1,0 +1,14 @@
+[    
+    {
+        "model": "product.product",
+        "pk": "00008cb3-9981-48ce-bd5c-28f3b4cc9432",
+        "fields": {
+            "country": "Italy",
+            "description": "Sharp aromas of white cherry and bramble open the nose of this ruby-colored Negroamaro. The wine does boast bright acidity and some sourness that should pair with fried rice balls stuffed with cheesy mozzarella.",
+            "points": 85,
+            "price": null,
+            "variety": "Negroamaro",
+            "winery": "Vita Italia"
+        }
+    }
+]
