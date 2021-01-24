@@ -3,9 +3,7 @@ import uuid
 
 # Create your models here.
 class Product(models.Model):
-    keys = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False
-    )
+    key = models.UUIDField(default=uuid.uuid4, editable=False)
     country = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     points = models.IntegerField()

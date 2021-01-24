@@ -5,8 +5,8 @@ from .models import Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    fields = ('keys', 'country', 'description', 'points', 'price', 'variety', 'winery',)
-    list_display = ('keys', 'country', 'points', 'price', 'variety', 'winery',)
+    fields = ('id','key', 'country', 'description', 'points', 'price', 'variety', 'winery',)
+    list_display = ('id','key', 'country', 'points', 'price', 'variety', 'winery',)
     list_filter = ('country', 'variety', 'winery',)
-    ordering = ('variety',)
-    readonly_fields = ('keys',) 
+    ordering = ('id','key',)
+    readonly_fields = ('id','key',) 
