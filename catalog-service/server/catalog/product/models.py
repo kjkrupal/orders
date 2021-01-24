@@ -12,6 +12,7 @@ class Product(models.Model):
     )
     variety = models.CharField(max_length=255)
     winery = models.CharField(max_length=255)
+    quantity = models.IntegerField(default=10)
 
     def __str__(self):
         return f'{self.id}'
