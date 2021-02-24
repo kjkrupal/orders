@@ -6,3 +6,4 @@ djangorestframework==3.12.2
 celery==5.0.5
 django-celery-results==2.0.0
 kombu==5.0.2
+celery-message-consumer==1.2.1

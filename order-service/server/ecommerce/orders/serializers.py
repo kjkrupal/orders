@@ -50,3 +50,15 @@ class OrderSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "product": {"write_only": True},
         }
+
+
+class PublishOrderSerializer(serializers.ModelSerializer):
+    order_details = OrderDetailsSerializer()
+
+    class Meta:
+        model = models.Order
+        fields = (
+            "id",
+            "product",
+            "order_details",
+        )

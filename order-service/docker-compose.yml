@@ -37,6 +37,11 @@ services:
     restart: on-failure
     command: >
       sh -c "cd ecommerce && celery -A ecommerce.celery worker -l info"
+    environment:
+      - PGDATABASE=ecommerce
+      - PGUSER=ecommerce
+      - PGPASSWORD=ecommerce
+      - PGHOST=ecommerce-orders-database
     depends_on:
       - server
       - database

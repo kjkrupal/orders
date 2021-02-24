@@ -53,7 +53,6 @@ with app.pool.acquire(block=True) as conn:
     )
 
 
-# setting consumer
 class ProductAddConsumer(bootsteps.ConsumerStep):
     def get_consumers(self, channel):
         return [
