@@ -7,11 +7,11 @@ curl --location --request POST 'http://localhost:8080/api/v1/orders/create/' \
     "order_details": {
         "first_name": "Krupal",
         "last_name": "Jadhav",
-        "street_1": "2730 S Veitch Street",
-        "street_2": "APT 312",
-        "city": "Arlington",
-        "state": "VA",
-        "zip_code": 22206
+        "street_1": "Some Street",
+        "street_2": "Apt X",
+        "city": "Some City",
+        "state": "ANy State",
+        "zip_code": 123456
     },
     "product": 2
 }'  
@@ -25,11 +25,11 @@ For Postman:
     "order_details": {
         "first_name": "Krupal",
         "last_name": "Jadhav",
-        "street_1": "2730 S Veitch Street",
-        "street_2": "APT 312",
-        "city": "Arlington",
-        "state": "VA",
-        "zip_code": 22206
+        "street_1": "Some Street",
+        "street_2": "Apt X",
+        "city": "Some City",
+        "state": "Any State",
+        "zip_code": 123456
     },
     "product": 2
 }
