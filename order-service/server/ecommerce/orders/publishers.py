@@ -1,15 +1,13 @@
-from __future__ import absolute_import, unicode_literals
-
-from celery import shared_task
-
-from ecommerce import constants as project_constants
-from ecommerce.celery import app
+# Add publisher here
+from ecommerce import redis, constants
 
 
-@shared_task
 def order_created(order):
-    with app.producer_pool.acquire(block=True) as producer:
-        producer.publish(
-            order,
-            exchange=project_constants.EXCHANGE_NAME,
-        )
+    order_details = {
+        "product_id": order.product_id,
+        "quantity": 1,
+    }
+    redis.publish_data_on_redis(
+        data=order_details,
+        channel=constants.ORDER_CREATE,
+    )
