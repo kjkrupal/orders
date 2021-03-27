@@ -31,12 +31,17 @@ services:
       - static:/usr/src/app/static
     networks:
       - order-service-network
-
-  worker:
+  
+  order-service-subscriber:
     image: ecommerce-orders-server
     restart: on-failure
     command: >
-      sh -c "cd ecommerce && celery -A ecommerce.celery worker -l info"
+      sh -c "cd ecommerce && python -u manage.py redis_subscriber"
+    environment:
+      - PGDATABASE=ecommerce
+      - PGUSER=ecommerce
+      - PGPASSWORD=ecommerce
+      - PGHOST=ecommerce-orders-database
     depends_on:
       - server
       - database
@@ -64,4 +69,4 @@ volumes:
 networks:
   order-service-network:
     external:
-      name: rabbitmq-network
+      name: redis-network

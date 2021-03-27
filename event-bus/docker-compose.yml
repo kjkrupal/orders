@@ -1,18 +1,18 @@
 version: "3.8"
 
 services:
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - REDIS_PASSWORD=pAssw0rd
+    container_name: redis_server
     ports:
-      - 5672:5672
-      - 15672:15672
+      - 6379:6379
     networks:
-      - rabbitmq-network
-    hostname: my-rabbit
-    volumes:
-      - ./etc/definitions.json:/etc/rabbitmq/definitions.json
+      - redis-network
+    hostname: my-redis
+
 networks:
-  rabbitmq-network:
-    name: rabbitmq-network
+  redis-network:
+    name: redis-network
     driver: bridge

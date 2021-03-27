@@ -15,6 +15,7 @@ services:
     build:
       context: ./server
     container_name: catalog-server
+    image: catalog-server
     command: [ "bash", "start.sh" ]
     depends_on: 
       - database
@@ -31,6 +32,21 @@ services:
     networks:
       - catalog-service-network
 
+  catalog-service-subscriber:
+    image: catalog-server
+    restart: on-failure
+    command: >
+      sh -c "cd catalog && python -u manage.py redis_subscriber"
+    environment:
+      - PGDATABASE=catalog
+      - PGUSER=catalog
+      - PGPASSWORD=catalog
+      - PGHOST=catalog-database
+    depends_on:
+      - server
+      - database
+    networks:
+      - catalog-service-network
 
   reverse-proxy:
     build:
@@ -53,5 +69,5 @@ volumes:
 networks:
   catalog-service-network:
     external:
-      name: rabbitmq-network
+      name: redis-network
     
